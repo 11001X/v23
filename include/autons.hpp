@@ -9,10 +9,10 @@ extern pros::Motor flywheelmotor;
 extern pros::Motor intakemotor;
 extern pros::ADIDigitalOut shooter;
 
-void test_auton();
+void wp_auton();
 
-void drive_example();
-void turn_example();
+void skills_auton();
+void disc_auton();
 
 void default_constants();
 void exit_condition_defaults();

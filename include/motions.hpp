@@ -9,3 +9,5 @@ void set_flywheel(int val);
 void intake(int velocity, int time);
 void flywheel(int velocity, int time);
 void lift(int velocity, int time);
+
+void shooter_set(int time);

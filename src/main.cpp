@@ -27,7 +27,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 Drive chassis ( {2, -5}, {-3, 4}, 13, 3.125, 200, 1);
 
 pros::Motor liftmotor(7, pros::E_MOTOR_GEARSET_18, true);
-pros::Motor flywheelmotor(10, pros::E_MOTOR_GEARSET_18, false);
+pros::Motor flywheelmotor(10, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor intakemotor(18, pros::E_MOTOR_GEARSET_18, true);
 
 #define SHOOTER_PORT 'A'
@@ -49,8 +49,8 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("Example Drive\n\nDrive forward and come back.", drive_example),
-    Auton("Example Turn\n\nTurn 3 times.", turn_example)
+    Auton("Example Drive\n\nDrive forward and come back.", skills_auton),
+    Auton("Example Turn\n\nTurn 3 times.", disc_auton)
   });
 
   // Initialize chassis and auton selector
@@ -81,13 +81,13 @@ void autonomous() {
   // pros::delay(2000);
   // drive_example();
   // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
-  test_auton();
+  skills_auton();
 }
 
 void opcontrol() {
   // This is preference to what you like to drive on.
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-
+  bool down = false;
   while (true) {
     
     chassis.tank();
@@ -98,7 +98,12 @@ void opcontrol() {
     //lift up speed, lift down speed
     lift_control(127, -127);
 
-    pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+    down = shooter_control();
 
+    pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+    if(down){
+      pros::delay(100);
+      shooter.set_value(false);
+    }
   }
 }

@@ -19,17 +19,19 @@ void lift_control(int up, int down){
 }
 
 void flywheel_control(int val){
-    if (controller.get_digital(DIGITAL_L1))
-        set_flywheel(val);
-    else
+    if (controller.get_digital(DIGITAL_L1)){
+        set_flywheel(val); 
+    }else{
+        flywheelmotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
         set_flywheel(0);
+    }
 }
 
 
-void shooter_control(bool val){
+bool shooter_control(){
     if(controller.get_digital(DIGITAL_Y)){
         shooter.set_value(true);
-    }else{
-        shooter.set_value(false);
+        return true;
     }
+    return false;
 }
