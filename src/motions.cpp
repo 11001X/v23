@@ -29,6 +29,9 @@ void flywheel(int velocity, int time){
     pros::delay(time);
     set_flywheel(0);
 }
+void set_flywheel_velocity(int velocity){
+    flywheelmotor.move_velocity(velocity);
+}
 
 void shooter_set(int time){
     shooter.set_value(true);

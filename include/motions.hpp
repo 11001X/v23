@@ -5,6 +5,7 @@
 void set_intake(int val);
 void set_lift(int val);
 void set_flywheel(int val);
+void set_flywheel_velocity(int velocity);
 
 void intake(int velocity, int time);
 void flywheel(int velocity, int time);

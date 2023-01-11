@@ -32,14 +32,14 @@ pros::Motor intakemotor(18, pros::E_MOTOR_GEARSET_18, true);
 
 #define SHOOTER_PORT 'A'
 
-pros::ADIDigitalOut shooter(SHOOTER_PORT);
+pros::ADIDigitalOut shooter(SHOOTER_PORT, false);
 
 void initialize() {
   // Print our branding over your terminal :D
   ez::print_ez_template();
   
   pros::delay(500); // Stop the user from doing anything while legacy ports configure.
-
+  // shooter.set_value(false);
   // Configure your chassis controls
   chassis.toggle_modify_curve_with_controller(true); // Enables modifying the controller curve with buttons on the joysticks
   chassis.set_active_brake(0); // Sets the active brake kP. We recommend 0.1.
@@ -67,6 +67,7 @@ void initialize() {
  */
 void disabled() {
   // . . .
+  shooter.set_value(false);
 }
 
 void competition_initialize() {
@@ -82,6 +83,7 @@ void autonomous() {
   // drive_example();
   // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
   skills_auton();
+  // set_flywheel_velocity(600);
 }
 
 void opcontrol() {
@@ -95,8 +97,6 @@ void opcontrol() {
     //intake in speed, intake out speed
     intake_control(127, -127);
     flywheel_control(127);
-    //lift up speed, lift down speed
-    lift_control(127, -127);
 
     down = shooter_control();
 
