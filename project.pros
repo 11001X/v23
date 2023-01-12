@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "v23-Main",
+    "project_name": "v23-Skills",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -188,8 +188,8 @@
       }
     },
     "upload_options": {
-      "icon": "pizza",
-      "slot": 1
+      "icon": "planet",
+      "slot": 2
     }
   }
 }

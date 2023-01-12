@@ -24,11 +24,10 @@ Intake Motor: PORT:18, Gear ratio:18, Reversed: true
 **/
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
-Drive chassis ( {2, -5}, {-3, 4}, 13, 3.125, 200, 1);
+Drive chassis ( {12, 1, 2}, {-18, -3, -4}, 5, 3.125, 200, 1);
 
-pros::Motor liftmotor(7, pros::E_MOTOR_GEARSET_18, true);
-pros::Motor flywheelmotor(10, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor intakemotor(18, pros::E_MOTOR_GEARSET_18, true);
+pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, true);
 
 #define SHOOTER_PORT 'A'
 
