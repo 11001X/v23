@@ -24,7 +24,7 @@ Intake Motor: PORT:18, Gear ratio:18, Reversed: true
 **/
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
-Drive chassis ( {12, 1, 2}, {-18, -3, -4}, 5, 3.125, 200, 1);
+Drive chassis ( {-1, 2, 12}, {3, -4, -18}, 5, 3.125, 200, 1);
 
 pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, true);
