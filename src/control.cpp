@@ -28,6 +28,6 @@ bool shooter_control(){
 
 void launcher_control(){
     if(controller.get_digital(DIGITAL_Y)){
-        launch();
+        deploylaunch();
     }
 }

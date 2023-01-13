@@ -52,8 +52,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("Example Drive\n\nDrive forward and come back.", skills_auton),
-    Auton("Example Turn\n\nTurn 3 times.", disc_auton)
+    Auton("Win Point\n\nDrive forward and come back.", wp_auton),
+    Auton("Skills\n\nDrive forward and come back.", skills_auton),
+    Auton("Disc\n\nTurn 3 times.", disc_auton)
   });
 
   // Initialize chassis and auton selector
@@ -84,8 +85,7 @@ void autonomous() {
   chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
   // pros::delay(2000);
   // drive_example();
-  // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
-  skills_auton();
+  ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
   // set_flywheel_velocity(600);
 }
 
