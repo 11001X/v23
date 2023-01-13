@@ -100,6 +100,7 @@ void opcontrol() {
     //intake in speed, intake out speed
     intake_control(127, -127);
     flywheel_control(127);
+    launcher_control();
 
     down = shooter_control();
 
