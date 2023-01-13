@@ -25,3 +25,9 @@ bool shooter_control(){
     }
     return false;
 }
+
+void launcher_control(){
+    if(controller.get_digital(DIGITAL_Y)){
+        launch();
+    }
+}
