@@ -38,7 +38,7 @@ void shooter_set(int time){
     shooter.set_value(false);
 }
 
-void deplopylaunch(){
+void launch(){
     launcher1.set_value(true);
     launcher2.set_value(true);
 }
