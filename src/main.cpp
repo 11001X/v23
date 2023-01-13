@@ -30,8 +30,12 @@ pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, true);
 
 #define SHOOTER_PORT 'A'
+#define LAUNCHER1_PORT 'B'
+#define LAUNCHER2_PORT 'C'
 
 pros::ADIDigitalOut shooter(SHOOTER_PORT, false);
+pros::ADIDigitalOut launcher1(LAUNCHER1_PORT, false);
+pros::ADIDigitalOut launcher2(LAUNCHER2_PORT, false);
 
 void initialize() {
   // Print our branding over your terminal :D
