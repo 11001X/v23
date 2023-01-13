@@ -8,6 +8,10 @@ extern pros::Motor liftmotor;
 extern pros::Motor flywheelmotor;   
 extern pros::Motor intakemotor;
 extern pros::ADIDigitalOut shooter;
+extern pros::ADIDigitalOut launcher1;
+extern pros::ADIDigitalOut launcher2;
+
+
 
 void wp_auton();
 
