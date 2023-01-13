@@ -13,4 +13,4 @@ void flywheel(int velocity, int time);
 void lift(int velocity, int time);
 
 void shooter_set(int time);
-void launch();
+void deploylaunch();
