@@ -1,0 +1,66 @@
+//set_drive_pid(Distance, Max_Speed, enabling a slew)
+  chassis.set_drive_pid(-3, HIGHER_SPEED, false);
+  chassis.wait_drive(); //Delay for drive to move.
+
+  intake(-127, 150);
+
+  chassis.set_drive_pid(9.25, HIGHER_SPEED, false);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(43, 115);
+  chassis.wait_drive();
+
+  set_flywheel_velocity(380);
+  chassis.set_drive_pid(67, 120);
+  
+  chassis.set_turn_pid(-47, 127);
+  chassis.wait_drive();
+
+  flywheel_until_speed(1,-1.5);
+  shooter_set(50);
+  pros::delay(500);
+  flywheel_until_speed(1,-11);
+  shooter_set(50); 
+
+  set_flywheel_velocity(-20);
+  pros::delay(700);
+
+  set_intake(127);
+
+  chassis.set_turn_pid(-65, HIGHER_TURN_SPEED);
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(-11, 127);
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(4, 127);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(-133, 110);
+  chassis.wait_drive();
+
+  set_flywheel_velocity(442);
+  chassis.set_drive_pid(-64, 125, false);
+  chassis.wait_drive();
+  set_intake(-90);
+  chassis.set_swing_pid(RIGHT_SWING, -87, 127);
+  chassis.wait_drive();
+  pros::delay(10);
+
+  chassis.set_drive_pid(4, 127, false);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(-85,127);
+  chassis.wait_drive();
+  // pros::delay(400);
+  flywheel_until_speed(1,4);
+  shooter_set(100);
+  pros::delay(200);
+  flywheel_until_speed(1,0);
+  shooter_set(100); 
+  pros::delay(200);
+  flywheel_until_speed(1,0);
+  shooter_set(100); 
+  
+  chassis.set_drive_pid(0, HIGHER_SPEED, true);
+  chassis.wait_drive();

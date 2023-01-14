@@ -19,45 +19,46 @@ void wp_auton() {
 
   intake(-127, 150);
 
-  chassis.set_drive_pid(9.25, HIGHER_SPEED, false);
+  chassis.set_drive_pid(8.5, HIGHER_SPEED, false);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(43, 110);
+  chassis.set_turn_pid(44, 110);
   chassis.wait_drive();
 
   chassis.set_drive_pid(64, 127, false);
   chassis.wait_until(30);
-  set_flywheel_velocity(380);
+  set_flywheel_velocity(390);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(-49, HIGHER_TURN_SPEED);
+  chassis.set_turn_pid(-48, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
   pros::delay(200);
-  flywheel_until_speed(1,-1.5);
+  flywheel_until_speed(1,-6.5);
   shooter_set(50);
-  pros::delay(500);
+  pros::delay(200);
   flywheel_until_speed(1,-11);
   shooter_set(50); 
+  pros::delay(100);
 
-  set_flywheel_velocity(-20);
+  set_flywheel_velocity(-100);
   pros::delay(700);
-
+  set_flywheel_velocity(0);
   set_intake(127);
 
-  chassis.set_turn_pid(-65, HIGHER_TURN_SPEED);
+  chassis.set_turn_pid(-63, 110);
   chassis.wait_drive();
 
   chassis.set_drive_pid(-11, 127);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(4, 127);
+  chassis.set_drive_pid(2, 127);
   chassis.wait_drive();
 
   chassis.set_turn_pid(-133, 110);
   chassis.wait_drive();
 
-  set_flywheel_velocity(442);
+  set_flywheel_velocity(470);
   chassis.set_drive_pid(-64, 125, false);
   chassis.wait_drive();
   set_intake(-90);
@@ -68,16 +69,16 @@ void wp_auton() {
   chassis.set_drive_pid(4, 127, false);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(-85,127);
+  chassis.set_turn_pid(-81,127);
   chassis.wait_drive();
   // pros::delay(400);
-  flywheel_until_speed(1,4);
+  flywheel_until_speed(1,2);
   shooter_set(100);
   pros::delay(200);
-  flywheel_until_speed(1,0);
+  flywheel_until_speed(1,-1);
   shooter_set(100); 
   pros::delay(200);
-  flywheel_until_speed(1,0);
+  flywheel_until_speed(1,-4);
   shooter_set(100); 
   
   chassis.set_drive_pid(0, HIGHER_SPEED, true);
