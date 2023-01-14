@@ -4,6 +4,17 @@ void set_intake(int val){
     intakemotor = val;
 }
 
+void flywheelauto(double target) {
+  target = flywheelmotor.get_position()+target;
+  flywheelPID.set_target(target);
+  ez::exit_output exit = ez::RUNNING;
+  while (flywheelPID.exit_condition({flywheelmotor}, true) == ez::RUNNING) {
+    double output = flywheelPID.compute(flywheelmotor.get_position());
+    set_flywheel(output);
+    pros::delay(ez::util::DELAY_TIME);
+  }
+  set_flywheel(0);
+}
 
 void set_flywheel(int val){
     flywheelmotor = val;

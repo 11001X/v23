@@ -29,6 +29,9 @@ Drive chassis ( {-1, 2, 12}, {3, -4, -18}, 5, 3.125, 200, 1);
 pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, true);
 
+PID flywheelPID{0.45, 0, 0, 0, "flywheel"};
+
+
 #define SHOOTER_PORT 'A'
 #define LAUNCHER1_PORT 'B'
 #define LAUNCHER2_PORT 'C'
@@ -54,7 +57,10 @@ void initialize() {
   ez::as::auton_selector.add_autons({
     Auton("Win Point\n\nDrive forward and come back.", wp_auton),
     Auton("Skills\n\nDrive forward and come back.", skills_auton),
-    Auton("Disc\n\nTurn 3 times.", disc_auton)
+    Auton("Disc\n\nTurn 3 times.", disc_auton),
+    
+    
+    
   });
 
   // Initialize chassis and auton selector

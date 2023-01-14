@@ -10,7 +10,7 @@ extern pros::Motor intakemotor;
 extern pros::ADIDigitalOut shooter;
 extern pros::ADIDigitalOut launcher1;
 extern pros::ADIDigitalOut launcher2;
-
+extern PID flywheelPID;
 
 
 void wp_auton();
