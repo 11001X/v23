@@ -59,10 +59,12 @@ void wp_auton() {
   chassis.wait_drive();
 
   set_flywheel_velocity(470);
-  chassis.set_drive_pid(-64, 125, false);
+  chassis.set_drive_pid(-63, 125, false);
   chassis.wait_drive();
   set_intake(-90);
-  chassis.set_swing_pid(RIGHT_SWING, -87, 127);
+  chassis.set_turn_pid(-90, 127);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-2.5, 127, false);
   chassis.wait_drive();
   pros::delay(10);
 
