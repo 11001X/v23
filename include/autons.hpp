@@ -13,10 +13,12 @@ extern pros::ADIDigitalOut launcher2;
 extern PID flywheelPID;
 
 
+
 void wp_auton();
 
 void skills_auton();
 void disc_auton();
+void roller_auton();
 
 void default_constants();
 void exit_condition_defaults();

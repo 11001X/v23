@@ -12,6 +12,8 @@ void intake_control(int in, int out){
 void flywheel_control(int val){
     if (controller.get_digital(DIGITAL_L2)){
         set_flywheel(val); 
+    }else if (controller.get_digital(DIGITAL_B)){
+        set_flywheel(-val);
     }else{
         set_flywheel(0);
     }

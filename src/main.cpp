@@ -55,9 +55,10 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("Disc\n\nTurn 3 times.", disc_auton),
-    Auton("Win Point\n\nDrive forward and come back.", wp_auton),
-    Auton("Skills\n\nDrive forward and come back.", skills_auton),
+    Auton("Disc\n\nDISC.", disc_auton),
+    Auton("Win Point\nDrive forward and come back.", wp_auton),
+    Auton("Roller\n\n\nROLLER.", roller_auton),
+    Auton("Skills\n\n\n\nSKILLS", skills_auton),
   });
 
   // Initialize chassis and auton selector

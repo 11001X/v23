@@ -12,10 +12,95 @@ const int SWING_SPEED = 90;
 const int HIGHER_SPEED = 120;
 const int HIGHER_TURN_SPEED = 100;
 
+/*
+This is the auton we have to get both rollers and shoot 5 discs up, a solo win-point.
+*/
 void wp_auton() {
-  //set_drive_pid(Distance, Max_Speed, enabling a slew)
+
+  //Backs up to roll the first roller at 120
   chassis.set_drive_pid(-3, HIGHER_SPEED, false);
-  chassis.wait_drive(); //Delay for drive to move.
+  chassis.wait_drive(); 
+  
+  //Outtakes to turn the roller up
+  intake(-127, 150);
+
+  //Moves forward for 8.5 inches
+  chassis.set_drive_pid(8.5, HIGHER_SPEED, false);
+  chassis.wait_drive();
+
+  //Turns to face the area between the disks 
+  chassis.set_turn_pid(44, 110);
+  chassis.wait_drive();
+
+  //Drives between the disks, avoiding them
+  chassis.set_drive_pid(64, 127, false);
+  chassis.wait_until(30);
+  set_flywheel_velocity(390); //Starts the flywheel and sets the intended speed
+  chassis.wait_drive();
+
+  //Turns to face the goal
+  chassis.set_turn_pid(-48, HIGHER_TURN_SPEED);
+  chassis.wait_drive();
+
+  //Delays between shots
+  pros::delay(200);
+  flywheel_until_speed(1,-6.5); //Lets the flywheel reach 6.5 more than the intended speed
+  shooter_set(50); //Shoots and retracts the flywheel piston
+  pros::delay(200);
+  flywheel_until_speed(1,-11); //Lets the flywheel reach 11 more than the intended speed
+  shooter_set(50); 
+  pros::delay(100);
+
+  set_flywheel_velocity(-100); //Reverses the flywheel to stop disks from flying out while intaking
+  pros::delay(700);
+  set_flywheel_velocity(0); //Stops the flywheel
+  set_intake(127); //Starts the intake
+
+  chassis.set_turn_pid(-63, 110); //turns toward the back disks
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(-11, 127); //moves back to collect the first disk of the three
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(2, 127); //moves forward to align with the other two disks
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(-133, 110); //turns towards the other disks
+  chassis.wait_drive();
+
+  set_flywheel_velocity(478); //Starts the flywheel again
+  chassis.set_drive_pid(-63, 125, false); //moves forward while intaking
+  chassis.wait_drive();
+  set_intake(-90); //Starts outtaking
+
+  chassis.set_turn_pid(-90, 127); //Turn towards the final roller
+  chassis.wait_drive();
+  chassis.set_drive_pid(-5, 127, false); //Moves back towards the roller while outtaking
+  chassis.wait_drive();
+  pros::delay(10); //10ms wait to turn the roller
+
+  chassis.set_drive_pid(4, 127, false); //Moves forward
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(-81,127); //Turns towards goal
+  chassis.wait_drive();
+
+  flywheel_until_speed(1,2); //Flywheel routine
+  shooter_set(100);
+  pros::delay(200);
+  flywheel_until_speed(1,-1);
+  shooter_set(100); 
+  pros::delay(200);
+  flywheel_until_speed(1,-4);
+  shooter_set(100); 
+  
+  chassis.set_drive_pid(0, HIGHER_SPEED, true); //Stops the robot
+  chassis.wait_drive();
+}
+
+void roller_auton(){
+  chassis.set_drive_pid(-3, HIGHER_SPEED, false);
+  chassis.wait_drive();
 
   intake(-127, 150);
 
@@ -37,7 +122,7 @@ void wp_auton() {
   flywheel_until_speed(1,-6.5);
   shooter_set(50);
   pros::delay(200);
-  flywheel_until_speed(1,-11);
+  flywheel_until_speed(1,-12);
   shooter_set(50); 
   pros::delay(100);
 
@@ -59,35 +144,27 @@ void wp_auton() {
   chassis.wait_drive();
 
   set_flywheel_velocity(470);
-  chassis.set_drive_pid(-63, 125, false);
+  chassis.set_drive_pid(-16, 125, true);
   chassis.wait_drive();
-  set_intake(-90);
-  chassis.set_turn_pid(-90, 127);
-  chassis.wait_drive();
-  chassis.set_drive_pid(-2.5, 127, false);
-  chassis.wait_drive();
-  pros::delay(10);
-
-  chassis.set_drive_pid(4, 127, false);
+  chassis.set_turn_pid(-47, 115);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(-81,127);
+  chassis.set_drive_pid(2.5, 127, false);
   chassis.wait_drive();
+
   // pros::delay(400);
-  flywheel_until_speed(1,2);
+  flywheel_until_speed(1,0);
   shooter_set(100);
   pros::delay(200);
   flywheel_until_speed(1,-1);
   shooter_set(100); 
   pros::delay(200);
-  flywheel_until_speed(1,-4);
+  flywheel_until_speed(1,0);
   shooter_set(100); 
   
   chassis.set_drive_pid(0, HIGHER_SPEED, true);
   chassis.wait_drive();
 }
-
-
 
 // Drive Example
 void skills_auton() {
@@ -95,7 +172,7 @@ void skills_auton() {
   chassis.set_drive_pid(-3, HIGHER_SPEED, false);
   chassis.wait_drive(); 
 
-  intake(-127, 200);
+  intake(-127, 220);
   //Move 
   chassis.set_drive_pid(10, HIGHER_SPEED, false);
   chassis.wait_drive();
@@ -108,7 +185,7 @@ void skills_auton() {
   
   chassis.set_drive_pid(-19, HIGHER_SPEED);
   chassis.wait_drive();
-  pros::delay(500);
+  pros::delay(195);
 
   // set_intake(0);
   //Turn towards Other Roller
@@ -137,7 +214,7 @@ void skills_auton() {
   chassis.set_turn_pid(-5, 117);
   chassis.wait_drive();
 
-  flywheel_until_speed(1,0); //-2
+  flywheel_until_speed(1,-4); //-2
   shooter_set(100);
   pros::delay(700);
   flywheel_until_speed(1,0); //2
@@ -197,7 +274,7 @@ void skills_auton() {
   chassis.wait_drive();
   
 
-  chassis.set_drive_pid(-44, 40);
+  chassis.set_drive_pid(-40, 40);
   chassis.wait_until(-34);
   chassis.set_max_speed(110);
   chassis.wait_until(-40);
@@ -209,7 +286,7 @@ void skills_auton() {
   chassis.wait_drive();
   chassis.set_drive_pid(-2.5,120);
   chassis.wait_drive();
-  intake(127, 200);
+  intake(127, 350);
 
   chassis.set_drive_pid(4,100);
   chassis.wait_drive();
@@ -231,7 +308,7 @@ void skills_auton() {
   chassis.set_drive_pid(-18, HIGHER_SPEED);
   chassis.wait_drive();
 
-  pros::delay(50);
+  pros::delay(100);
 
   chassis.set_drive_pid(10, HIGHER_SPEED);
   chassis.wait_drive();
@@ -298,7 +375,7 @@ void skills_auton() {
   pros::delay(100);
   chassis.set_turn_pid(45, HIGHER_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(-45,125);
+  chassis.set_drive_pid(-46,125);
   chassis.wait_drive();
  
   deploylaunch();
@@ -306,21 +383,22 @@ void skills_auton() {
 // Turn Example
 void disc_auton() {
   set_intake(127);
-  set_flywheel_velocity(413);
+  set_flywheel_velocity(427);
   chassis.set_drive_pid(-27.5, DRIVE_SPEED, false);
   chassis.wait_drive(); //Delay for drive to move.
-  set_intake(0);
-  chassis.set_turn_pid(-158, HIGHER_TURN_SPEED);
+  
+  chassis.set_turn_pid(-156.5, HIGHER_TURN_SPEED);
   chassis.wait_drive();
-
+  pros::delay(200);
+  set_intake(0);
   // pros::delay(200);
-  flywheel_until_speed(1,-5);
+  flywheel_until_speed(1,-1);
   shooter_set(100);
   pros::delay(200);
   flywheel_until_speed(1,-1);
   shooter_set(100);
   pros::delay(200);
-  flywheel_until_speed(1,-0.5);
+  flywheel_until_speed(1,-1);
   shooter_set(100); 
   set_flywheel_velocity(0);
   set_flywheel(0);
@@ -335,39 +413,44 @@ void disc_auton() {
   // shooter_set(100);
   // set_flywheel_velocity(0);
 
-  set_intake(124);
+  set_intake(127);
 
   chassis.set_drive_pid(-4, 127);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(-45, HIGHER_TURN_SPEED);
+  chassis.set_turn_pid(-46, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
-  set_flywheel_velocity(407);
-  chassis.set_drive_pid(-46, DRIVE_SPEED, false);
+  set_flywheel_velocity(420);
+  chassis.set_drive_pid(-37, HIGHER_SPEED, false);
   chassis.wait_drive();
-  set_intake(0);
+  pros::delay(500);
+  
 
-  chassis.set_turn_pid(-130, HIGHER_TURN_SPEED);
+  chassis.set_turn_pid(-145, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
   flywheel_until_speed(1,0);
   shooter_set(100);
   pros::delay(200);
-  flywheel_until_speed(1,-2.5);
+  flywheel_until_speed(1,0);
   shooter_set(100);
   pros::delay(400);
   set_flywheel_velocity(0);
-
-  chassis.set_turn_pid(137, HIGHER_TURN_SPEED);
+  set_intake(0);
+  chassis.set_turn_pid(136, 110);
   chassis.wait_drive();
-
-  chassis.set_drive_pid(-75, 127);
+  
+  chassis.set_drive_pid(-77, 127);
   chassis.wait_drive();
   set_intake(-100);
-  chassis.set_swing_pid(RIGHT_SWING, 183, 127);
+  // chassis.set_swing_pid(RIGHT_SWING, 183, 127);
+  chassis.set_turn_pid(180, 127);
   chassis.wait_drive();
-  pros::delay(50);
+
+  chassis.set_drive_pid(-7.5, 127);
+  chassis.wait_drive();
+  pros::delay(20);
   set_intake(0);
 
 
