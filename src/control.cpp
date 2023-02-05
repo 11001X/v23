@@ -1,5 +1,7 @@
 #include "main.h"
 
+
+//Defines intake controls
 void intake_control(int in, int out){
     if (controller.get_digital(DIGITAL_L1))
         set_intake(in);
@@ -9,6 +11,7 @@ void intake_control(int in, int out){
         set_intake(0);
 }
 
+//Defines flywheel controls
 void flywheel_control(int val){
     if (controller.get_digital(DIGITAL_L2)){
         set_flywheel(val); 
@@ -19,7 +22,7 @@ void flywheel_control(int val){
     }
 }
 
-
+//Defines shooter controls
 bool shooter_control(){
     if(controller.get_digital(DIGITAL_R2)){
         shooter.set_value(true);
@@ -28,6 +31,7 @@ bool shooter_control(){
     return false;
 }
 
+//Defines launcher controls
 void launcher_control(){
     if(controller.get_digital(DIGITAL_Y)){
         deploylaunch();

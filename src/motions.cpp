@@ -1,5 +1,6 @@
 #include "main.h"
 
+//Set intake motor speed to a value from -127 to 127
 void set_intake(int val){
     intakemotor = val;
 }
@@ -16,6 +17,7 @@ void flywheelauto(double target) {
   set_flywheel(0);
 }
 
+//Set flywheel motor speed to a value from -127 to 127
 void set_flywheel(int val){
     flywheelmotor = val;
 }
@@ -32,9 +34,13 @@ void flywheel(int velocity, int time){
     pros::delay(time);
     set_flywheel(0);
 }
+
+
 void set_flywheel_velocity(int velocity){
     flywheelmotor.move_velocity(velocity);
 }
+
+
 void flywheel_until_speed(int delay, int adjustment=0){
     while(flywheelmotor.get_target_velocity()>flywheelmotor.get_actual_velocity()+adjustment){
         pros::delay(delay);
@@ -42,13 +48,14 @@ void flywheel_until_speed(int delay, int adjustment=0){
     }
 }
 
-
+//Set shooter to a value from -127 to 127
 void shooter_set(int time){
     shooter.set_value(true);
     pros::delay(time);
     shooter.set_value(false);
 }
 
+//Launch
 void deploylaunch(){
     launcher1.set_value(true);
     launcher2.set_value(true);

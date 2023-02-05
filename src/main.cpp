@@ -57,8 +57,9 @@ void initialize() {
   ez::as::auton_selector.add_autons({
     Auton("Disc\n\nDISC.", disc_auton),
     Auton("Win Point\nDrive forward and come back.", wp_auton),
-    Auton("Roller\n\n\nROLLER.", roller_auton),
     Auton("Skills\n\n\n\nSKILLS", skills_auton),
+    Auton("Roller\n\n\nROLLER.", roller_auton),
+    
   });
 
   // Initialize chassis and auton selector
@@ -94,7 +95,7 @@ void autonomous() {
 }
 
 void opcontrol() {
-  // This is preference to what you like to drive on.
+  //Chassis Coasting
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
   bool down = false;
   while (true) {
@@ -103,15 +104,17 @@ void opcontrol() {
 
     //intake in speed, intake out speed
     intake_control(127, -127);
+    //flywheel rotation speed
     flywheel_control(127);
+    //To launch
     launcher_control();
-
+    
+    //Defines current state of flywheel indexers
     down = shooter_control();
-
-    pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+    pros::delay(ez::util::DELAY_TIME); // Timer calculations for chassis movement.
     if(down){
-      pros::delay(100);
-      shooter.set_value(false);
+      pros::delay(100); //Delay as to not hurt the pneumatics system.
+      shooter.set_value(false); //Brings the indexer down
     }
   }
 }
