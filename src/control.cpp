@@ -55,13 +55,13 @@ bool angler_control(bool anglerposition)
         if (anglerposition)
         {
             angler.set_value(false);
-            pros::delay(10);
+            pros::delay(30);
             return false;
         }
         else
         {
             angler.set_value(true);
-            pros::delay(10);
+            pros::delay(30);
             return true;
         }
     }
@@ -86,13 +86,13 @@ bool intakepiston_control(bool intakeval)
         if (intakeval)
         {
             intakepiston.set_value(false);
-            pros::delay(10);
+            pros::delay(500);
             return false;
         }
         else
         {
             intakepiston.set_value(true);
-            pros::delay(10);
+            pros::delay(500);
             return true;
         }
     }

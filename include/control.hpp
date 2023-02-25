@@ -8,4 +8,4 @@ bool shooter_control();
 void launcher_control();
 bool intakepiston_control(bool intakeval);
 bool angler_control(bool anglerposition);
-int flywheelset_control(int val);
+int flywheelset_control(int);

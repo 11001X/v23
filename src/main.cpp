@@ -26,7 +26,7 @@ Intake Motor: PORT:18, Gear ratio:18, Reversed: true
 **/
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
-Drive chassis({-8, -2, 7}, {-5, -4, 6}, 13, 3.125, 200, 1);
+Drive chassis({-8, -2, 7}, {-5, 4, 6}, 13, 3.125, 200, 1);
 
 pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, false);
@@ -56,7 +56,7 @@ pros::Vision vision_sensor(15);
 pros::ADIDigitalOut shooter(SHOOTER_PORT, false);
 pros::ADIDigitalOut launcher1(LAUNCHER1_PORT, false);
 pros::ADIDigitalOut launcher2(LAUNCHER2_PORT, false);
-pros::ADIDigitalOut intakepiston(INTAKEPISTON_PORT, true);
+pros::ADIDigitalOut intakepiston(INTAKEPISTON_PORT, false);
 pros::ADIDigitalOut angler(ANGLER_PORT, false);
 bool intakeval = true;
 
@@ -123,7 +123,7 @@ void opcontrol()
 {
   // Chassis Coasting
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-  bool down = true;
+  bool down = false;
   bool anglerposition = true;
 
 
@@ -136,7 +136,7 @@ void opcontrol()
     intake_control(127, -127);
     // flywheel rotation speed
     // int val = flywheelset_control(3600);
-    flywheel_control(127);
+    flywheel_control(110);
     // To launch
     launcher_control();
     
