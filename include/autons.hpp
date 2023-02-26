@@ -25,5 +25,6 @@ void disc_auton();
 void roller_auton();
 void test_auton();
 void newwp_auton();
+void disc_constants();
 void default_constants();
 void exit_condition_defaults();

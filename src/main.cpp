@@ -76,8 +76,8 @@ void initialize()
   // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.add_autons({
+      Auton("Test\n\nTEST", disc_auton),
       Auton("NewWP\n\nTEST", newwp_auton),
-      Auton("Test\n\nTEST", test_auton),
       Auton("Win Point\nDrive forward and come back.", wp_auton),
       Auton("Skills\n\n\n\nSKILLS", skills_auton),
       Auton("Roller\n\n\nROLLER.", roller_auton),
@@ -110,7 +110,7 @@ void autonomous()
   chassis.reset_pid_targets();               // Resets PID targets to 0
   chassis.reset_gyro();                      // Reset gyro position to 0
   chassis.reset_drive_sensor();              // Reset drive sensors to 0
-  chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
+  // chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
   // pros::delay(2000);
   // drive_example();
   ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.

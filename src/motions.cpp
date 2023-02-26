@@ -178,7 +178,8 @@ void set_flywheel_speed(int speed) {
 
 
 void vision_align()
-{
+{   
+    double currentheading = chassis.imu.get_heading();
     while (true)
     {
         vision_sensor.set_exposure(100);
@@ -188,27 +189,30 @@ void vision_align()
         // if(vision_sensor.get_object_count()==1){
         // cout<<"Area: " << rtn.width*rtn.height<<endl;
         // }
+        
         if (rtn.signature == 1)
-        {
-            double dist = sqrt(
-                pow(rtn.x_middle_coord - (VISION_FOV_WIDTH / 2), 2) +
-                pow(rtn.y_middle_coord - (VISION_FOV_HEIGHT / 2), 2));
-            if (dist < 15)
-            {
+        {       
+            
+            // double dist = sqrt(
+            //     pow(rtn.x_middle_coord - (VISION_FOV_WIDTH / 2), 2) +
+            //     pow(rtn.y_middle_coord - (VISION_FOV_HEIGHT / 2), 2));
+            double dist = rtn.x_middle_coord-(VISION_FOV_WIDTH / 2);
+            cout<<"RTN detected, Dist: "<<dist<<endl;
+            if (fabs(dist)<3 ) {
                 cout << "Within (" << dist << ")" << endl;
                 break;
             }
             // Too Far Right, so turn right
-            if (rtn.x_middle_coord > VISION_FOV_WIDTH / 2)
-            {
-                chassis.set_turn_pid(chassis.imu.get_heading() + 1, 127);
-            }
-            else
-            {
-                chassis.set_turn_pid(chassis.imu.get_heading() - 1, 127);
+            if (dist>0){   
+                cout<<"bro did it hit"<<endl;
+                currentheading = currentheading+1;
+                chassis.set_turn_pid(currentheading, 127);
+            } else {   
+                currentheading = currentheading-1;
+                chassis.set_turn_pid(currentheading, 127);
             }
 
-            // pros::delay(2);
+            pros::delay(5);
         }
     }
 }
