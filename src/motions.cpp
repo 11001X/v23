@@ -69,24 +69,23 @@ void deploylaunch()
     launcher2.set_value(true);
 }
 
-void flywheelPID(double target)
-{
-    // Constants
+void flywheelPIDWait(double target){
     double kP = 0.3;
     double kV = .0354;
-    double threshold = 150;
+    double threshold = 5;
 
     double error = 0;
     double prevError = 0;
 
     double output = 0;
-
+    target = (target/127)*600;
     while (true)
     {
 
         // Proportional
-        error = target - flywheelmotor.get_actual_velocity() * 6;
-
+        error = target - flywheelmotor.get_actual_velocity();
+        cout<<"Acc velocity"<<flywheelmotor.get_actual_velocity()<<endl;
+        cout<<"target"<<target<<endl;
         // Set speed of flywheel
         if (error > threshold)
         {
@@ -95,10 +94,12 @@ void flywheelPID(double target)
         else if (error < -threshold)
         {
             output = 0;
+            
         }
         else
         {
             output = (kV * target) + (kP * error);
+            break;
         }
 
         // Sets the speed of the flywheel
@@ -115,10 +116,55 @@ void flywheelPID(double target)
         flywheelmotor.move(output);
 
         prevError = error;
-        pros::delay(1);
+        pros::delay(10);
     }
+    pros::delay(300);
 }
 
+void flywheelPID(double target) {
+  // Constants
+  double kP = 0.3;
+  double kV = .0354; 
+  double threshold = 10;
+
+  double error = 0;
+  double prevError = 0;
+
+  double output = 0;
+
+    target = (target/127)*600;
+  while (true) {
+
+    // Proportional
+    error = target - flywheelmotor.get_actual_velocity();
+
+    // Set speed of flywheel
+    if (error > threshold){
+      output = 127;
+    }
+    else if (error < -threshold){
+      output = 0;
+    }
+    else{
+      output = (kV * target) + (kP * error) ;
+    }
+
+    // Sets the speed of the flywheel
+    
+    if(output > 127){
+      output = 127;
+    }
+    else if(output < 0){
+      output = 0; 
+    }
+
+    flywheelmotor.move(output);
+
+    prevError = error;
+    pros::delay(10);
+
+  }
+}
 
 void set_flywheel_speed(int speed) {
   static std::unique_ptr<pros::Task> pidTask {};
@@ -128,6 +174,8 @@ void set_flywheel_speed(int speed) {
 
 // vision::signature SIG_1 (1, 601, 7681, 4142, -2711, -495, -1602, 0.800, 0);
 // vex::vision vision1 ( vex::PORT1, 22, SIG_1, SIG_2, SIG_3, SIG_4, SIG_5, SIG_6, SIG_7 );
+
+
 
 void vision_align()
 {

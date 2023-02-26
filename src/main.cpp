@@ -113,7 +113,6 @@ void autonomous()
   chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
   // pros::delay(2000);
   // drive_example();
-  pros::Task flywheel ( [] { flywheelPID(0); } );
   ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
   // set_flywheel_velocity(600);
 }
