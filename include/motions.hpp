@@ -18,4 +18,4 @@ void deploylaunch();
 void vision_align();
 void flywheelPID(double target);
 void set_flywheel_speed(int speed);
-void flywheelPIDWait(double target);
+void flywheelPIDWait(double target, double threshold = 5);

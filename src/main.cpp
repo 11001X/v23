@@ -76,10 +76,13 @@ void initialize()
   // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.add_autons({
+      Auton("Skills\n\n\n\nSKILLS", skills_auton),
       Auton("Disc\n\nRight Side", disc_auton),
+      
+      
       Auton("NewWP\n\nTEST", newwp_auton),
       Auton("Roller\n\n\n Left Side.", roller_auton),
-      Auton("Skills\n\n\n\nSKILLS", skills_auton),
+      
       
 
   });
@@ -125,6 +128,7 @@ void opcontrol()
   bool down = false;
   bool anglerposition = true;
 
+  // set_flywheel(110);
 
   while (true)
   {

@@ -69,10 +69,10 @@ void deploylaunch()
     launcher2.set_value(true);
 }
 
-void flywheelPIDWait(double target){
+void flywheelPIDWait(double target, double threshold){
     double kP = 0.3;
     double kV = .0354;
-    double threshold = 5;
+    // double threshold = thr;
 
     double error = 0;
     double prevError = 0;

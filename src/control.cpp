@@ -50,18 +50,18 @@ void launcher_control()
 
 bool angler_control(bool anglerposition)
 {
-    if (controller.get_digital(DIGITAL_R1))
+    if (controller.get_digital(DIGITAL_LEFT))
     {
         if (anglerposition)
         {
             angler.set_value(false);
-            pros::delay(30);
+            pros::delay(200);
             return false;
         }
         else
         {
             angler.set_value(true);
-            pros::delay(30);
+            pros::delay(200);
             return true;
         }
     }
