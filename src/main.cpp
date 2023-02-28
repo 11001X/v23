@@ -57,7 +57,7 @@ pros::ADIDigitalOut shooter(SHOOTER_PORT, false);
 pros::ADIDigitalOut launcher1(LAUNCHER1_PORT, false);
 pros::ADIDigitalOut launcher2(LAUNCHER2_PORT, false);
 pros::ADIDigitalOut intakepiston(INTAKEPISTON_PORT, false);
-pros::ADIDigitalOut angler(ANGLER_PORT, false);
+pros::ADIDigitalOut angler(ANGLER_PORT, true);
 bool intakeval = true;
 
 void initialize()
@@ -128,7 +128,7 @@ void opcontrol()
   bool down = false;
   bool anglerposition = true;
 
-  // set_flywheel(110);
+  set_flywheel(110);
 
   while (true)
   {
@@ -139,7 +139,7 @@ void opcontrol()
     intake_control(127, -127);
     // flywheel rotation speed
     // int val = flywheelset_control(3600);
-    flywheel_control(110);
+    // flywheel_control(110);
     // To launch
     launcher_control();
     
