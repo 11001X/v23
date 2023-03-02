@@ -17,6 +17,12 @@ extern pros::ADIDigitalOut angler;
 extern shared_ptr<okapi::ChassisController> myChassis;
 extern shared_ptr<okapi::AsyncMotionProfileController> profileController;
 extern pros::Vision vision_sensor;
+extern pros::Motor l1;
+extern pros::Motor l2;
+extern pros::Motor l3;
+extern pros::Motor r1;
+extern pros::Motor r2;
+extern pros::Motor r3;
 
 void wp_auton();
 
