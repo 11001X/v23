@@ -195,17 +195,18 @@ void skills_auton() {
 
   intakepiston.set_value(false);
 
-  chassis.set_drive_pid(7.5, DRIVE_SPEED);
+  chassis.set_drive_pid(8.5, DRIVE_SPEED);
   chassis.wait_until(1.5);
   intakepiston.set_value(false);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-1, DRIVE_SPEED);
+  pros::delay(300);
+  chassis.set_drive_pid(-2, DRIVE_SPEED);
   chassis.wait_drive();
 
   pros::delay(1000);
 
-  chassis.set_turn_pid(-69, HIGHER_TURN_SPEED);
+  chassis.set_turn_pid(-74, HIGHER_TURN_SPEED);
   chassis.wait_drive();
   
   //shoot 3rd set
@@ -275,7 +276,7 @@ void skills_auton() {
   chassis.set_turn_pid(-97, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-21.25, 80, false);
+  chassis.set_drive_pid(-18.25, 80, false);
   chassis.wait_drive();
 
   //3rd roller
@@ -342,10 +343,12 @@ void skills_auton() {
 
   intakepiston.set_value(false);
 
-  chassis.set_drive_pid(8, DRIVE_SPEED);
+  chassis.set_drive_pid(10, DRIVE_SPEED);
   chassis.wait_drive();
-
-  pros::delay(850);
+  pros::delay(300);
+  chassis.set_drive_pid(-2, 120);
+  chassis.wait_drive();
+  pros::delay(750);
   
 
   chassis.set_turn_pid(-255, HIGHER_TURN_SPEED);
@@ -373,43 +376,41 @@ void skills_auton() {
   set_flywheel(120);
 
 
-  chassis.set_turn_pid(-87, HIGHER_TURN_SPEED);
-  chassis.wait_drive();
-  set_intake(127);
+  // chassis.set_turn_pid(-87, HIGHER_TURN_SPEED);
+  // chassis.wait_drive();
+  // set_intake(127);
 
   //Intake 4th 3Stack
-  intakepiston.set_value(true);
+  // intakepiston.set_value(true);
 
-  chassis.set_drive_pid(6.5, 112);
+  chassis.set_drive_pid(-12, 127);
   chassis.wait_drive();
-  pros::delay(200);
+  // pros::delay(200);
 
-  intakepiston.set_value(false);
+  // intakepiston.set_value(false);
   
-  set_flywheel(116);
-  chassis.set_drive_pid(9.5, 95);
-  chassis.wait_drive();
+  // set_flywheel(116);
 
-  pros::delay(700);
+  // pros::delay(700);
 
-  chassis.set_turn_pid(102, 110);
-  chassis.wait_drive();
+  // chassis.set_turn_pid(102, 110);
+  // chassis.wait_drive();
 
   // angler.set_value(true);
 
-  chassis.set_drive_pid(2, 125);
-  chassis.wait_drive();
+  // chassis.set_drive_pid(2, 125);
+  // chassis.wait_drive();
   set_intake(0);
 
   //7th set
-  intake(-127, 400);
-  set_flywheel(120);
-  pros::delay(300);
-  intake(-127, 300);
+  // intake(-127, 400);
   // set_flywheel(120);
-  // // pros::delay(700);
-  // // intake(-127, 550);
-  set_flywheel(0);
+  // pros::delay(300);
+  // intake(-127, 300);
+  // // set_flywheel(120);
+  // // // pros::delay(700);
+  // // // intake(-127, 550);
+  // set_flywheel(0);
 
   // chassis.set_drive_pid(-25, 127);
   // chassis.wait_drive();
@@ -417,20 +418,24 @@ void skills_auton() {
   chassis.set_turn_pid(45, 127);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-10, 127);
+  chassis.set_drive_pid(-12, 127);
   // chassis.wait_until(-5);
   // launcher1.set_value(true);
   // launcher2.set_value(true);
   chassis.wait_drive();
 
-  launcher1.set_value(true);
+  // launcher1.set_value(true);
+  // launcher2.set_value(true);
+  // pros::delay(100);
+  // launcher1.set_value(false);
+  // launcher2.set_value(false);
+  // pros::delay(100);
+  // launcher1.set_value(true);
+  // launcher2.set_value(true);
+  // deploylaunch();
   launcher2.set_value(true);
-  pros::delay(100);
-  launcher1.set_value(false);
-  launcher2.set_value(false);
-  pros::delay(100);
   launcher1.set_value(true);
-  launcher2.set_value(true);
+
 
 }
 // Turn Example
