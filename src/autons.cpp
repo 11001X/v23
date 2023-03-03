@@ -15,11 +15,90 @@ const int HIGHER_TURN_SPEED = 100;
 This is the auton we have to get both rollers and shoot 5 discs up, a solo win-point.
 */
 void roller_auton(){
-  chassis.set_drive_pid(-2, HIGHER_SPEED, false);
+
+ 
+  disc_constants();
+  set_flywheel(113);
+  chassis.set_drive_pid(-1.5, HIGHER_SPEED, false);
   chassis.wait_drive(); 
 
   //Outtakes to turn the roller up
-  intake(-127, 300);
+  intake(-127, 200);
+  set_intake(127);
+  chassis.set_swing_pid(ez::RIGHT_SWING, -40, HIGHER_TURN_SPEED);
+  chassis.wait_drive(); 
+  pros::delay(200);
+
+  chassis.set_swing_pid(ez::RIGHT_SWING, -4, 90);
+  chassis.wait_drive(); 
+  set_intake(0);
+
+  // flywheelPIDWait(113, 10);
+  // intake(-127, 500);
+  // set_flywheel(118);
+  // pros::delay(100);
+  // flywheelPIDWait(118, 10);
+  // intake(-127, 200);
+  // set_flywheel(113);
+  // pros::delay(5);
+  // pros::delay(1000);
+  // pros::delay(5);
+  // flywheelPIDWait(113, 5);
+  // intake(-127, 550);
+
+  flywheelPIDWait(113,10);
+  intake(-127, 500);
+  // pros::delay(500);
+  flywheelPIDWait(118,10);
+  // pros::delay(100);
+  intake(-127, 400);
+  pros::delay(200);
+  flywheelPIDWait(113,5);
+  intake(-127, 500);
+
+  set_intake(127);
+  set_flywheel(113);
+  pros::delay(150);
+
+  
+  intakepiston.set_value(true);
+  chassis.set_swing_pid(ez::LEFT_SWING, 65, HIGHER_TURN_SPEED);
+  chassis.wait_drive(); 
+  
+  chassis.set_drive_pid(10.5, 80, false);
+  chassis.wait_drive();
+  intakepiston.set_value(false);
+  pros::delay(1000);
+  chassis.set_drive_pid(7.6, 70);
+  chassis.wait_drive();
+
+  pros::delay(500);
+
+  chassis.set_turn_pid(-25, 110);
+  chassis.wait_drive();
+
+  // flywheelPIDWait(115, 5);
+  // intake(-127, 400);
+  // // set_flywheel(115);
+  // pros::delay(100);
+  // flywheelPIDWait(115, 10);
+  // intake(-127, 200);
+  // // set_flywheel(120);
+  // pros::delay(1000);
+  // flywheelPIDWait(115, 5);
+  // intake(-127, 550);
+  // // set_intake(127);
+  // pros::delay(150);
+  flywheelPIDWait(113,10);
+  intake(-127, 500);
+  // pros::delay(500);
+  flywheelPIDWait(113,10);
+  // pros::delay(100);
+  intake(-127, 400);
+  pros::delay(200);
+  flywheelPIDWait(113,5);
+  intake(-127, 500);
+  
 }
 // Drive Example
 void skills_auton() {
@@ -84,14 +163,13 @@ void skills_auton() {
   chassis.set_turn_pid(40, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(44, HIGHER_SPEED);
+  chassis.set_drive_pid(43, HIGHER_SPEED);
   chassis.wait_drive();
 
-  pros::delay(400);
-  set_intake(0);
-  chassis.set_turn_pid(-46, HIGHER_TURN_SPEED);
+  pros::delay(200);
+
+  chassis.set_turn_pid(-45, HIGHER_TURN_SPEED);
   chassis.wait_drive();
-  
   
   //second set of shots
   intake(-127, 400);
@@ -104,7 +182,7 @@ void skills_auton() {
   set_flywheel(104);
 
    
-  chassis.set_turn_pid(45, HIGHER_TURN_SPEED);
+  chassis.set_turn_pid(44.5, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
   //1st 3Stack Intaking
@@ -118,13 +196,18 @@ void skills_auton() {
   intakepiston.set_value(false);
 
   chassis.set_drive_pid(7.5, DRIVE_SPEED);
+  chassis.wait_until(1.5);
+  intakepiston.set_value(false);
   chassis.wait_drive();
 
-  pros::delay(800);
-
-  chassis.set_turn_pid(-75, HIGHER_TURN_SPEED);
+  chassis.set_drive_pid(-1, DRIVE_SPEED);
   chassis.wait_drive();
 
+  pros::delay(1000);
+
+  chassis.set_turn_pid(-69, HIGHER_TURN_SPEED);
+  chassis.wait_drive();
+  
   //shoot 3rd set
   // flywheelPIDWait(108,18);
   // intake(-127, 400);
@@ -157,10 +240,10 @@ void skills_auton() {
 
   intakepiston.set_value(false);
   set_flywheel(98);
-  chassis.set_drive_pid(7.5, 95);
+  chassis.set_drive_pid(8.5, 90);
   chassis.wait_drive();
 
-  pros::delay(1000);
+  pros::delay(800);
 
   chassis.set_turn_pid(-78, HIGHER_TURN_SPEED);
   chassis.wait_drive();
@@ -169,7 +252,7 @@ void skills_auton() {
   //put up angler for closerange shooting of 2nd 3 stack
   angler.set_value(true);
   
-  chassis.set_drive_pid(28, HIGHER_SPEED);
+  chassis.set_drive_pid(29, HIGHER_SPEED);
   chassis.wait_until(12);
   set_intake(0);
   chassis.wait_drive();
@@ -192,11 +275,11 @@ void skills_auton() {
   chassis.set_turn_pid(-97, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-18.25, 80, false);
+  chassis.set_drive_pid(-21.25, 80, false);
   chassis.wait_drive();
 
   //3rd roller
-  intake(127, 780);
+  intake(127, 400);
 
   chassis.set_drive_pid(14.5, HIGHER_SPEED, false);
   chassis.wait_drive();
@@ -204,7 +287,7 @@ void skills_auton() {
   chassis.set_turn_pid(-180, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-14.25, 85, false);
+  chassis.set_drive_pid(-13.25, 85, false);
   chassis.wait_drive();
   //4th Roller
   intake(127, 400);
@@ -214,7 +297,7 @@ void skills_auton() {
   set_flywheel(106);
 
   //Move towards line of three on the next side
-  chassis.set_swing_pid(ez::LEFT_SWING, -175, 110);
+  chassis.set_swing_pid(ez::LEFT_SWING, -175, TURN_SPEED);
   chassis.wait_drive();
    
   chassis.set_drive_pid(27, 120);
@@ -243,11 +326,10 @@ void skills_auton() {
   intake(-127, 400);
   set_flywheel(127);
   pros::delay(200);
-  intake(-127, 550);
+  intake(-127, 500);
   set_flywheel(104);
 
-
-  chassis.set_turn_pid(-132, HIGHER_TURN_SPEED);
+  chassis.set_turn_pid(-133.5, HIGHER_TURN_SPEED);
   chassis.wait_drive();
 
   // intake 3rd 3Stack
@@ -255,12 +337,12 @@ void skills_auton() {
 
   intakepiston.set_value(true);
 
-  chassis.set_drive_pid(12, HIGHER_SPEED);
+  chassis.set_drive_pid(12, DRIVE_SPEED);
   chassis.wait_drive();
 
   intakepiston.set_value(false);
 
-  chassis.set_drive_pid(6, DRIVE_SPEED);
+  chassis.set_drive_pid(8, DRIVE_SPEED);
   chassis.wait_drive();
 
   pros::delay(850);
@@ -287,8 +369,8 @@ void skills_auton() {
   intake(-127, 400);
   set_flywheel(127);
   pros::delay(200);
-  intake(-127, 400);
-  set_flywheel(118);
+  intake(-127, 600);
+  set_flywheel(120);
 
 
   chassis.set_turn_pid(-87, HIGHER_TURN_SPEED);
@@ -298,52 +380,36 @@ void skills_auton() {
   //Intake 4th 3Stack
   intakepiston.set_value(true);
 
-  chassis.set_drive_pid(5.5, 112);
+  chassis.set_drive_pid(6.5, 112);
   chassis.wait_drive();
-  pros::delay(100);
+  pros::delay(200);
 
   intakepiston.set_value(false);
   
-  set_flywheel(98);
-  chassis.set_drive_pid(7.5, 90);
+  set_flywheel(116);
+  chassis.set_drive_pid(9.5, 95);
   chassis.wait_drive();
 
   pros::delay(700);
 
-  // chassis.set_turn_pid(102, HIGHER_TURN_SPEED);
-  // chassis.wait_drive();
-
-  chassis.set_turn_pid(102, HIGHER_TURN_SPEED);
+  chassis.set_turn_pid(102, 110);
   chassis.wait_drive();
-  
-  chassis.set_drive_pid(3, HIGHER_SPEED);
-  chassis.wait_drive();
-  set_intake(0);
 
   // angler.set_value(true);
 
-  // chassis.set_drive_pid(26.5, HIGHER_SPEED);
-  // chassis.wait_drive();
-  // set_intake(0);
+  chassis.set_drive_pid(2, 125);
+  chassis.wait_drive();
+  set_intake(0);
 
   //7th set
-  // intake(-127, 400);
-  // set_flywheel(108);
-  // intake(-127, 300);
-  // set_flywheel(112);
-  // pros::delay(700);
-  // intake(-127, 550);
-  // set_flywheel(0);
-
   intake(-127, 400);
-  set_flywheel(124);
-  pros::delay(200);
+  set_flywheel(120);
+  pros::delay(300);
   intake(-127, 300);
-  set_flywheel(127);
-  pros::delay(700);
-  intake(-127, 650);
-
-  
+  // set_flywheel(120);
+  // // pros::delay(700);
+  // // intake(-127, 550);
+  set_flywheel(0);
 
   // chassis.set_drive_pid(-25, 127);
   // chassis.wait_drive();
@@ -351,33 +417,59 @@ void skills_auton() {
   chassis.set_turn_pid(45, 127);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-15, 127);
+  chassis.set_drive_pid(-10, 127);
+  // chassis.wait_until(-5);
+  // launcher1.set_value(true);
+  // launcher2.set_value(true);
   chassis.wait_drive();
 
   launcher1.set_value(true);
+  launcher2.set_value(true);
+  pros::delay(100);
+  launcher1.set_value(false);
+  launcher2.set_value(false);
+  pros::delay(100);
+  launcher1.set_value(true);
+  launcher2.set_value(true);
 
 }
 // Turn Example
 void disc_auton() {
-  chassis.set_drive_brake(pros::E_MOTOR_BRAKE_HOLD);
-
-  set_flywheel(127);
+  disc_constants();
+  set_flywheel(103);
   set_intake(127);
-  chassis.set_drive_pid(10, 127, false);
+  chassis.set_drive_pid(10, DRIVE_SPEED, false);
   chassis.wait_drive(); 
   pros::delay(500);
+  chassis.set_turn_pid(5, 127);
+  chassis.wait_drive(); 
   set_intake(0);
 
-  flywheelPIDWait(114);
+  // flywheelPIDWait(114, 15);
+  // intake(-127, 400);
+  // flywheelPIDWait(116, 15);
+  // intake(-127, 300);
+  // pros::delay(100);
+  // flywheelPIDWait(115, 15);
+  // intake(-127, 500);
+  // set_intake(127);
+
+  flywheelPIDWait(103,15);
+  intake(-127, 500);
+  set_flywheel(105);
+  // pros::delay(500);
+
+  flywheelPIDWait(105,15);
+  // pros::delay(100);
   intake(-127, 400);
-  flywheelPIDWait(116);
-  intake(-127, 300);
-  pros::delay(100);
-  flywheelPIDWait(115);
+  set_flywheel(108);
+  pros::delay(200);
+  flywheelPIDWait(108,5);
   intake(-127, 500);
   set_intake(127);
   set_flywheel(0);
-  set_flywheel(127);
+  set_flywheel(121);
+
 
   chassis.set_turn_pid(15, 127);
   chassis.wait_drive(); 
@@ -395,23 +487,36 @@ void disc_auton() {
 
   chassis.set_drive_pid(9, 127); //NEW 
   chassis.wait_drive(); //NEW 
-  pros::delay(100);
+  // pros::delay(100);
   
   
-  chassis.set_drive_pid(-30, 127);
+  chassis.set_drive_pid(-29, 127);
   chassis.wait_drive();
   set_intake(0);
   chassis.set_turn_pid(-22, 124);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-2, 127);
+  chassis.set_drive_pid(-3, 127);
   chassis.wait_drive();
   intake(-127, 150);
   chassis.set_swing_pid(ez::LEFT_SWING, -14, 127);
   chassis.wait_drive();
   // chassis.set_drive_pid(2, 127);
   // chassis.wait_drive();
+
+  // flywheelPIDWait(121);
+  // intake(-127, 400);
+  // // set_flywheel(115);
+  // flywheelPIDWait(115, 15);
+  // intake(-127, 400);
+
+  flywheelPIDWait(121);
+  // pros::delay(100);
   intake(-127, 400);
+  set_flywheel(115);
+  pros::delay(200);
+  flywheelPIDWait(115,15);
+  intake(-127, 500);
   // flywheelPIDWait(116);
   // intake(-127, 300);
  
@@ -432,48 +537,56 @@ void test_auton(){
 void newwp_auton(){
   chassis.set_drive_brake(pros::E_MOTOR_BRAKE_HOLD);
   //Backs up to roll the first roller at 120
-  chassis.set_drive_pid(-2, HIGHER_SPEED, false);
+  chassis.set_drive_pid(-1.5, HIGHER_SPEED, false);
   chassis.wait_drive(); 
+  
   intakepiston.set_value(true);
   
   //Outtakes to turn the roller up
   intake(-127, 200);
 
   //Moves forward for 6 inches
+  
   chassis.set_drive_pid(2, 127, false);
   chassis.wait_drive();
-
+  // set_intake(127);
+  set_flywheel(115);
   chassis.set_turn_pid(51, 120);
   chassis.wait_drive();
+  
+  
+  chassis.set_drive_pid(25, 120, false);
+  chassis.wait_until(23);
   set_intake(127);
-  set_flywheel(127);
-  chassis.set_drive_pid(16, 127, false);
   chassis.wait_drive();
-  chassis.set_drive_pid(16, 60, false);
-  chassis.wait_until(4);
   intakepiston.set_value(false);
+  pros::delay(500);
+  chassis.set_drive_pid(7, 60);
   chassis.wait_drive();
+
+  pros::delay(500);
+  
   chassis.set_turn_pid(-31.5, 127);
   chassis.wait_drive();
-  pros::delay(200);
+  pros::delay(100);
   set_intake(0);
-  flywheelPIDWait(118);
+  flywheelPIDWait(115,15);
   intake(-127, 500);
   // pros::delay(500);
-  flywheelPIDWait(104);
+  flywheelPIDWait(102,15);
   // pros::delay(100);
-  intake(-127, 500);
+  intake(-127, 400);
   pros::delay(200);
-  flywheelPIDWait(106);
+  flywheelPIDWait(104,15);
   intake(-127, 500);
   set_intake(127);
-  set_flywheel(127);
+  set_flywheel(122);
   chassis.set_turn_pid(45, 127);
   chassis.wait_drive();
   
-  chassis.set_drive_pid(46, 127, false);
+  chassis.set_drive_pid(47, 127, false);
   chassis.wait_drive();
-  chassis.set_turn_pid(-143, 127);
+  chassis.set_turn_pid(-163, 127);
   chassis.wait_drive();
   set_intake(0);
   // set_intake(-127);
@@ -493,8 +606,8 @@ void newwp_auton(){
   // set_intake(-127);
   chassis.set_swing_pid(ez::LEFT_SWING, -82.5, 127);
   chassis.wait_drive();
-  flywheelPIDWait(123);
-  intake(-127,300);
+  flywheelPIDWait(122);
+  intake(-127,500);
   // pros::delay(100);
   // intake(-127,300);
   // pros::delay(100);
