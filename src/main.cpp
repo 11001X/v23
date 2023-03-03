@@ -130,8 +130,10 @@ void opcontrol()
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
   bool down = false;
   bool anglerposition = true;
+  bool started = true;
+  angler.set_value(true);
 
-  // set_flywheel(110);
+  set_flywheel(110);
 
   while (true)
   {
@@ -142,7 +144,8 @@ void opcontrol()
     intake_control(127, -127);
     // flywheel rotation speed
     // int val = flywheelset_control(3600);
-    flywheel_control(110);
+    // flywheel_control(110);
+    started = flywheelcontrol(110, started);
     // To launch
     launcher_control();
     

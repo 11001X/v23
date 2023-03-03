@@ -12,20 +12,35 @@ void intake_control(int in, int out)
 }
 
 // Defines flywheel controls
-void flywheel_control(int val)
-{
-    if (controller.get_digital(DIGITAL_L2))
-    {
-        set_flywheel(val);
+// void flywheel_control(int val)
+// {
+//     if (controller.get_digital(DIGITAL_L2))
+//     {
+//         set_flywheel(val);
+//     }
+//     else if (controller.get_digital(DIGITAL_B))
+//     {
+//         set_flywheel(-val);
+//     }
+//     else
+//     {
+//         set_flywheel(0);
+//     }
+// }
+
+bool flywheelcontrol(int val, bool started){
+    if (controller.get_digital(DIGITAL_L2)){
+        if(started){
+            set_flywheel(0);
+            pros::delay(70);
+            return false;
+        }else{
+            set_flywheel(val);
+            pros::delay(70);
+            return true;
+        }
     }
-    else if (controller.get_digital(DIGITAL_B))
-    {
-        set_flywheel(-val);
-    }
-    else
-    {
-        set_flywheel(0);
-    }
+    return started;
 }
 
 // Defines shooter controls
