@@ -83,10 +83,11 @@ void initialize()
   // Autonomous Selector using LLEMU
 
   ez::as::auton_selector.add_autons({
+      Auton("NewWP\n\nTEST", newwp_auton),
       Auton("Skills\n\n\n\nSKILLS", skills_auton),
       Auton("Disc\n\nRight Side", disc_auton),
       Auton("Roller\n\n\n Left Side.", roller_auton),
-      Auton("NewWP\n\nTEST", newwp_auton),
+      
       
   });
 
@@ -141,7 +142,7 @@ void opcontrol()
     chassis.tank();
 
     // intake in speed, intake out speed
-    intake_control(122, -127);
+    intake_control(127, -127);
     // flywheel rotation speed
     // int val = flywheelset_control(3600);
     // flywheel_control(110);

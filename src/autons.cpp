@@ -31,7 +31,7 @@ void roller_auton(){
 
   chassis.set_swing_pid(ez::RIGHT_SWING, -4, 90);
   chassis.wait_drive(); 
-  pros::delay(100);
+  pros::delay(300);
   set_intake(0);
 
   // flywheelPIDWait(113, 10);
@@ -446,7 +446,7 @@ void disc_auton() {
   set_intake(127);
   chassis.set_drive_pid(10, DRIVE_SPEED, false);
   chassis.wait_drive(); 
-  pros::delay(500);
+  pros::delay(600);
   chassis.set_turn_pid(5, 127);
   chassis.wait_drive(); 
   set_intake(0);
@@ -578,7 +578,7 @@ void newwp_auton(){
   set_intake(0);
   flywheelPIDWait(115,15);
   intake(-127, 500);
-  // pros::delay(500);
+  pros::delay(200);
   flywheelPIDWait(102,15);
   // pros::delay(100);
   intake(-127, 400);
