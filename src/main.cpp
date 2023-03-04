@@ -133,7 +133,7 @@ void opcontrol()
   bool started = true;
   angler.set_value(true);
 
-  set_flywheel(110);
+  set_flywheel(113);
 
   while (true)
   {
@@ -141,11 +141,11 @@ void opcontrol()
     chassis.tank();
 
     // intake in speed, intake out speed
-    intake_control(127, -127);
+    intake_control(122, -127);
     // flywheel rotation speed
     // int val = flywheelset_control(3600);
     // flywheel_control(110);
-    started = flywheelcontrol(110, started);
+    started = flywheelcontrol(113, started);
     // To launch
     launcher_control();
     
