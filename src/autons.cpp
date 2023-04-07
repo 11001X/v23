@@ -52,7 +52,7 @@ void roller_auton(){
   // pros::delay(500);
   flywheelPIDWait(118,10);
   // pros::delay(100);
-  intake(-127, 400);
+  intake(-127, 300);
   pros::delay(200);
   flywheelPIDWait(113,5);
   intake(-127, 500);
@@ -95,7 +95,7 @@ void roller_auton(){
   // pros::delay(500);
   flywheelPIDWait(113,10);
   // pros::delay(100);
-  intake(-127, 400);
+  intake(-127, 300);
   pros::delay(200);
   flywheelPIDWait(113,5);
   intake(-127, 500);
