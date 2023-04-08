@@ -3,8 +3,8 @@
 #include <math.h>
 
 using namespace std;
-
 using namespace ez;
+
 /**
 main.cpp
 Contains the definition to all the motors
@@ -15,44 +15,21 @@ Author's Note: Reversed means Left-sided
 ------------------------------------------------
 Controller: controller
 
-Chassis - 4 Motor Drive; Left ports: 2, 5; Right ports: 3, 4; Right Reversed
+Chassis - 4 Motor Drive; Left ports: 2, 7, 8; Right ports: 4, 5, 6; Right Reversed
     IMU - PORT 13, Wheel size: 4.125, RPM - 200, 1 External Gear Ratio
 
-Lift - Singular Lift Motor: PORT:7, Gear ratio:18, Reversed: false
-
-Flywheel Motor: PORT:10, Gear ratio:18, Reversed: false
-Intake Motor: PORT:18, Gear ratio:18, Reversed: true
+Flywheel Motor: PORT:10, Gear ratio:none, Reversed: false
+Intake Motor: PORT:17, Gear ratio:blue, Reversed: true
 
 **/
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 Drive chassis({-8, -2, 7}, {-5, 4, 6}, 13, 3.125, 200, 1);
 
-pros::Motor l1(8, pros::E_MOTOR_GEARSET_06, true);
-pros::Motor l2(2, pros::E_MOTOR_GEARSET_06, true);
-pros::Motor l3(7, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor r1(5, pros::E_MOTOR_GEARSET_06, true);
-pros::Motor r2(4, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor r3(6, pros::E_MOTOR_GEARSET_06, false);
-
 pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, false);
 
-shared_ptr<ChassisController> myChassis = ChassisControllerBuilder().withMotors({-8, -2, 7}, {5, 4, -6})
-                                              // Green gearset, 4 in wheel diam, 11.5 in wheel track
-                                              .withDimensions(AbstractMotor::gearset::blue, {{3.5_in, 12.5_in}, imev5BlueTPR})
-                                              .build();
-
-shared_ptr<AsyncMotionProfileController> profileController =
-    AsyncMotionProfileControllerBuilder()
-        .withLimits({
-            1.0, // Maximum linear velocity of the Chassis in m/s
-            2.0, // Maximum linear acceleration of the Chassis in m/s/s
-            10.0 // Maximum linear jerk of the Chassis in m/s/s/s
-        })
-        .withOutput(myChassis)
-        .buildMotionProfileController();
-
+//Piston ports
 #define SHOOTER_PORT 'E'
 #define LAUNCHER1_PORT 'B'
 #define LAUNCHER2_PORT 'C'
@@ -60,35 +37,29 @@ shared_ptr<AsyncMotionProfileController> profileController =
 #define ANGLER_PORT 'A'
 
 pros::Vision vision_sensor(15);
-pros::ADIDigitalOut shooter(SHOOTER_PORT, false);
+//All these initial states are false.
+pros::ADIDigitalOut shooter(SHOOTER_PORT, false); 
 pros::ADIDigitalOut launcher1(LAUNCHER1_PORT, false);
 pros::ADIDigitalOut launcher2(LAUNCHER2_PORT, false);
 pros::ADIDigitalOut intakepiston(INTAKEPISTON_PORT, false);
 pros::ADIDigitalOut angler(ANGLER_PORT, false);
-bool intakeval = true;
 
-void initialize()
+void initialize() //Runs when the program starts
 {
-  // Print our branding over your terminal :D
-  ez::print_ez_template();
-
   pros::delay(500); // Stop the user from doing anything while legacy ports configure.
-  // shooter.set_value(false);
   // Configure your chassis controls
   chassis.toggle_modify_curve_with_controller(true); // Enables modifying the controller curve with buttons on the joysticks
-  chassis.set_active_brake(0);                       // Sets the active brake kP. We recommend 0.1.
+  chassis.set_active_brake(0.1);                       // Sets the active brake kP. We recommend 0.1.
   chassis.set_curve_default(0, 0);                   // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
   default_constants();                               // Set the drive to your own constants from autons.cpp!
   exit_condition_defaults();                         // Set the exit conditions to your own constants from autons.cpp!
+  
   // Autonomous Selector using LLEMU
-
   ez::as::auton_selector.add_autons({
       Auton("NewWP\n\nTEST", newwp_auton),
       Auton("Skills\n\n\n\nSKILLS", skills_auton),
       Auton("Disc\n\nRight Side", disc_auton),
       Auton("Roller\n\n\n Left Side.", roller_auton),
-      
-      
   });
 
   // Initialize chassis and auton selector
@@ -103,13 +74,12 @@ void initialize()
  */
 void disabled()
 {
-  // . . .
-  shooter.set_value(false);
+
 }
 
-void competition_initialize()
+void competition_initialize() //Runs between autonomous and driver control.
 {
-  // . . .
+  
 }
 
 void autonomous()
@@ -117,45 +87,45 @@ void autonomous()
   chassis.reset_pid_targets();               // Resets PID targets to 0
   chassis.reset_gyro();                      // Reset gyro position to 0
   chassis.reset_drive_sensor();              // Reset drive sensors to 0
-  // chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
-  // pros::delay(2000);
-  // drive_example();
   ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
-  // set_flywheel_velocity(600);
 }
 
-#define EXAMPLE_SIG 3
+
 void opcontrol()
 {
-  // Chassis Coasting
+  // Chassis Coasting Brake Mode
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-  bool down = false;
-  bool anglerposition = true;
-  bool started = true;
+
+  bool INTAKE_PISTON_DOWN = false; 
+
+  //Sets original state of Angler at the beginning of driver control
   angler.set_value(true);
+  bool ANGLER_UP = true;
 
-  set_flywheel(113);
+  set_flywheel(113); //Start the flywheel to 113/127.
+  bool FLYWHEEL_RUNNING = true;
 
-  while (true)
+  while (true) //Start of actual driver control loop.
   {
 
-    chassis.tank();
+    chassis.tank(); //Chassis tank control.
 
-    // intake in speed, intake out speed
+    // Intake speed control (intake, outtake)
     intake_control(127, -127);
-    // flywheel rotation speed
-    // int val = flywheelset_control(3600);
-    // flywheel_control(110);
-    started = flywheelcontrol(113, started);
-    // To launch
-    launcher_control();
-    
 
-    // Defines current state of flywheel indexers
-    down = intakepiston_control(down);
-    anglerposition = angler_control(anglerposition);
-    pros::delay(ez::util::DELAY_TIME); // Timer calculations for chassis movement.
+    //Flywheel movement and speed definition.
+    FLYWHEEL_RUNNING = flywheelcontrol(113, FLYWHEEL_RUNNING);
     
+    // To launch string
+    launcher_control();
+  
+    // Defines intake piston state and control
+    INTAKE_PISTON_DOWN = intakepiston_control(INTAKE_PISTON_DOWN);
+    
+    // Defines angler piston state and control
+    ANGLER_UP = angler_control(ANGLER_UP);
+
+    pros::delay(ez::util::DELAY_TIME); // Timer calculations for chassis movement.
   }
 }
 

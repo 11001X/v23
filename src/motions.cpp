@@ -1,23 +1,10 @@
 #include "main.h"
 
-// Set intake motor speed to a value from -127 to 127
-void set_intake(int val)
-{
-    intakemotor = val;
-}
+//Synchronous methods for autonomous movement
 
-void flywheelauto(double target)
-{
-//     target = flywheelmotor.get_position() + target;
-//     flywheelPID.set_target(target);
-//     ez::exit_output exit = ez::RUNNING;
-//     while (flywheelPID.exit_condition({flywheelmotor}, true) == ez::RUNNING)
-//     {
-//         double output = flywheelPID.compute(flywheelmotor.get_position());
-//         set_flywheel(output);
-//         pros::delay(ez::util::DELAY_TIME);
-//     }
-//     set_flywheel(0);
+// Set intake motor speed to a value from -127 to 127
+void set_intake(int val){
+    intakemotor = val;
 }
 
 // Set flywheel motor speed to a value from -127 to 127
@@ -26,13 +13,15 @@ void set_flywheel(int val)
     flywheelmotor = val;
 }
 
-void intake(int velocity, int time)
+//Intake for a certain amount of time and stop from a speed of 127 to -127, where negative is outtaking.
+void intake(int velocity, int time) 
 {
     set_intake(velocity);
     pros::delay(time);
     set_intake(0);
 }
 
+//Flywheel motion for a period of time from a speed of 127 to -127, where negative is reversed spinning.
 void flywheel(int velocity, int time)
 {
     set_flywheel(velocity);
@@ -40,21 +29,24 @@ void flywheel(int velocity, int time)
     set_flywheel(0);
 }
 
+//flywheel timed motion by velocity (out of 600).
 void set_flywheel_velocity(int velocity)
 {
     flywheelmotor.move_velocity(velocity);
 }
 
+// Flywheel one-sided motion checking
+// Runs until the flywheel is at or greater than the desired speed
 void flywheel_until_speed(int delay, int adjustment = 0)
 {
+    //Target velocity is the previously set flywheel velocity. 
     while (flywheelmotor.get_target_velocity() > flywheelmotor.get_actual_velocity() + adjustment)
     {
-        pros::delay(delay);
-        ez::print_to_screen("Trial");
+        pros::delay(delay); //Incremental delay
     }
 }
 
-// Set shooter to a value from -127 to 127
+// Set shooter to a value from -127 to 127 (Not in use)
 void shooter_set(int time)
 {
     shooter.set_value(true);
@@ -62,34 +54,37 @@ void shooter_set(int time)
     shooter.set_value(false);
 }
 
-// Launch
+// Launch synchronous launcher
 void deploylaunch()
 {
     launcher1.set_value(true);
     launcher2.set_value(true);
 }
 
+//PID control for flywheel speed. 
 void flywheelPIDWait(double target, double threshold){
-    double kP = 0.3;
-    double kV = .0354;
+    double kP = 0.3; //Proportional Constant
+    double kV = .0354; //Velocity constnat
     // double threshold = thr;
 
     double error = 0;
     double prevError = 0;
 
     double output = 0;
-    target = (target/127)*600;
-    while (true)
+    target = (target/127)*600; //Converts speed out of 127 (Motor voltage units) to speed out of 600 (Velocity units)
+    
+    while (true) //Loops till within target threshold
     {
 
-        // Proportional
-        error = target - flywheelmotor.get_actual_velocity();
-        cout<<"Acc velocity"<<flywheelmotor.get_actual_velocity()<<endl;
-        cout<<"target"<<target<<endl;
+        error = target - flywheelmotor.get_actual_velocity(); //Error (distance)
+        
+        cout<<"Acc velocity"<<flywheelmotor.get_actual_velocity()<<endl; //Actual velocity of the flywheel motor as it is spinning.
+        cout<<"target"<<target<<endl; //The target velocity we want it to be.
+
         // Set speed of flywheel
-        if (error > threshold)
+        if (error > threshold) 
         {
-            output = 127;
+            output = 127; //Run max speed if its lower.
         }
         else if (error < -threshold)
         {
@@ -121,6 +116,7 @@ void flywheelPIDWait(double target, double threshold){
     pros::delay(300);
 }
 
+//Task-based flyweel PID (Not in use)
 void flywheelPID(double target) {
   // Constants
   double kP = 0.3;
@@ -166,17 +162,14 @@ void flywheelPID(double target) {
   }
 }
 
+//Flywheel PID speed setting (Not in use)
 void set_flywheel_speed(int speed) {
   static std::unique_ptr<pros::Task> pidTask {};
   if (pidTask != nullptr) { pidTask->remove(); }
   pidTask = (speed == -1) ? nullptr : std::make_unique<pros::Task>([=]{ flywheelPID(speed); });
 }
 
-// vision::signature SIG_1 (1, 601, 7681, 4142, -2711, -495, -1602, 0.800, 0);
-// vex::vision vision1 ( vex::PORT1, 22, SIG_1, SIG_2, SIG_3, SIG_4, SIG_5, SIG_6, SIG_7 );
-
-
-
+//Vision sensor alignment
 void vision_align()
 {   
     double currentheading = chassis.imu.get_heading();
