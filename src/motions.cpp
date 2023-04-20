@@ -13,10 +13,18 @@ void set_flywheel(int val)
     flywheelmotor = val;
 }
 
-//Intake for a certain amount of time and stop from a speed of 127 to -127, where negative is outtaking.
+//Intake for a certain amount of time and stop from a speed of 0 to 127
 void intake(int velocity, int time) 
 {
-    set_intake(velocity);
+    set_intake(fabs(velocity));
+    pros::delay(time);
+    set_intake(0);
+}
+
+//Outtake for a certain amount of time and stop from a speed of 0 to 127
+void outtake(int velocity, int time) 
+{
+    set_intake(-fabs(velocity));
     pros::delay(time);
     set_intake(0);
 }
@@ -54,11 +62,34 @@ void shooter_set(int time)
     shooter.set_value(false);
 }
 
+//Set Intake Piston Up
+void intake_up(){
+    intakepiston.set_value(false);
+}
+
+//Set Intake Piston Down
+void intake_down(){
+    intakepiston.set_value(true);
+}
+
 // Launch synchronous launcher
 void deploylaunch()
 {
     launcher1.set_value(true);
     launcher2.set_value(true);
+}
+
+//Firing procedure combined
+void discfire(int target_speed, int outtake_time){
+    flywheelPIDWait(target_speed);
+    outtake(127, outtake_time);
+}
+
+//Firing procedure without PIDs, utilizes delays to shoot.
+void direct_fire(int target_speed, int post_delay, int outtake_speed, int outtake_time){
+    set_flywheel(target_speed);
+    pros::delay(post_delay);
+    outtake(outtake_speed, outtake_time);   
 }
 
 //PID control for flywheel speed. 

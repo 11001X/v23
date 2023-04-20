@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "States 2023",
+    "project_name": "Worlds 2023",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -331,7 +331,7 @@
       }
     },
     "upload_options": {
-      "icon": "alien",
+      "icon": "X",
       "slot": 1,
       "after": "none"
     }

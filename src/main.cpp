@@ -24,10 +24,10 @@ Intake Motor: PORT:17, Gear ratio:blue, Reversed: true
 **/
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
-Drive chassis({-8, -2, 7}, {-5, 4, 6}, 13, 3.125, 200, 1);
+Drive chassis({-8, -2, 7}, {5, 4, -6}, 13, 3.25, 360, 1);
 
 pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, true);
 
 //Piston ports
 #define SHOOTER_PORT 'E'
@@ -56,10 +56,11 @@ void initialize() //Runs when the program starts
   
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-      Auton("NewWP\n\nTEST", newwp_auton),
-      Auton("Skills\n\n\n\nSKILLS", skills_auton),
-      Auton("Disc\n\nRight Side", disc_auton),
-      Auton("Roller\n\n\n Left Side.", roller_auton),
+      Auton("Inside Auton\n", outside_auton),
+      Auton("\nOutside Auton\n\n\n\n", outside_auton),
+      Auton("\n\nSolo Win Point\n\n\n", solowinpoint),
+      Auton("\n\n\nSkills\n\n", skills_auton),
+      
   });
 
   // Initialize chassis and auton selector

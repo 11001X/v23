@@ -24,13 +24,10 @@ extern pros::Motor r1;
 extern pros::Motor r2;
 extern pros::Motor r3;
 
-void wp_auton();
-
-void skills_auton();
-void disc_auton();
+void inside_auton();
+void outside_auton();
 void roller_auton();
-void test_auton();
-void newwp_auton();
-void disc_constants();
+void solowinpoint();
+void skills_auton();
 void default_constants();
 void exit_condition_defaults();

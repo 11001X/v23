@@ -70,16 +70,24 @@ Synchronous methods for autonomous movement
 2. void set_flywheel(int val)
    - Set flywheel motor speed to a value from -127 to 127
 3. void intake(int velocity, int time) 
-   - Intake for a certain amount of time and stop from a speed of 127 to -127, where negative is outtaking.
-4. void flywheel(int velocity, int time)
+   - Intake for a certain amount of time and stop (Speed of 0 to 127)
+4. void outtake(int velocity, int time)
+   - Outtake for a certain amount of time and stop (Speed of 0 to 127)
+5. void flywheel(int velocity, int time)
    - Flywheel motion for a period of time from a speed of 127 to -127, where negative is reversed spinning.
-5. void set_flywheel_velocity(int velocity)
+6. void set_flywheel_velocity(int velocity)
    - Flywheel timed motion by velocity (out of 600).
-6. void flywheel_until_speed(int delay, int adjustment = 0)
+7. void flywheel_until_speed(int delay, int adjustment = 0)
    - Flywheel one-sided motion checking
-7. void deploylaunch()
+8. void intake_up()
+   - Set Intake Piston Up
+9.  void intake_down()
+   - Set Intake Piston Down
+10. void deploylaunch()
    - Launch synchronous launcher
-8. void flywheelPIDWait(double target, double threshold)
+11. void discfire(int target_speed, int outtake_time)
+    - Firing procedure combined (PID wait + shooting)
+12. void flywheelPIDWait(double target, double threshold)
    - PID control for flywheel speed.
-9. void vision_align()
+13. void vision_align()
    - Vision sensor alignment
