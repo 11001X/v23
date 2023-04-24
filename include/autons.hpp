@@ -31,3 +31,4 @@ void solowinpoint();
 void skills_auton();
 void default_constants();
 void exit_condition_defaults();
+void outside_constants();

@@ -14,7 +14,7 @@ void intake_up();
 void intake_down();
 void deploylaunch();
 void discfire(int target_speed, int outtake_time = 100);
-void direct_fire(int target_speed, int post_delay, int outtake_speed = 127, int outtake_time = 100);
+void direct_fire(int target_speed, int post_delay, int outtake_time = 100, int outtake_speed = 127);
 void vision_align();
 void flywheelPID(double target);
 void set_flywheel_speed(int speed);

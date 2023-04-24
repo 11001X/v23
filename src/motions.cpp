@@ -86,7 +86,7 @@ void discfire(int target_speed, int outtake_time){
 }
 
 //Firing procedure without PIDs, utilizes delays to shoot.
-void direct_fire(int target_speed, int post_delay, int outtake_speed, int outtake_time){
+void direct_fire(int target_speed, int post_delay, int outtake_time , int outtake_speed){
     set_flywheel(target_speed);
     pros::delay(post_delay);
     outtake(outtake_speed, outtake_time);   

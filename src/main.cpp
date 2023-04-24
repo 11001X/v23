@@ -26,7 +26,7 @@ Intake Motor: PORT:17, Gear ratio:blue, Reversed: true
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 Drive chassis({-8, -2, 7}, {5, 4, -6}, 13, 3.25, 360, 1);
 
-pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, true);
 
 //Piston ports
@@ -56,8 +56,8 @@ void initialize() //Runs when the program starts
   
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-      Auton("Inside Auton\n", outside_auton),
       Auton("\nOutside Auton\n\n\n\n", outside_auton),
+      Auton("Inside Auton\n", inside_auton),
       Auton("\n\nSolo Win Point\n\n\n", solowinpoint),
       Auton("\n\n\nSkills\n\n", skills_auton),
       
@@ -103,7 +103,8 @@ void opcontrol()
   angler.set_value(true);
   bool ANGLER_UP = true;
 
-  set_flywheel(113); //Start the flywheel to 113/127.
+  // set_flywheel(113); //Start the flywheel to 113/127.
+  set_flywheel(127);
   bool FLYWHEEL_RUNNING = true;
 
   while (true) //Start of actual driver control loop.
@@ -115,7 +116,7 @@ void opcontrol()
     intake_control(127, -127);
 
     //Flywheel movement and speed definition.
-    FLYWHEEL_RUNNING = flywheelcontrol(113, FLYWHEEL_RUNNING);
+    FLYWHEEL_RUNNING = flywheelcontrol(127, FLYWHEEL_RUNNING);
     
     // To launch string
     launcher_control();
