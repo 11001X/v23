@@ -32,7 +32,7 @@ void inside_auton(){
   // chassis.set_drive_pid(-4, HIGHER_SPEED);
   // chassis.wait_drive();
 
-  chassis.set_turn_pid(-9.5, 113); //Turn towards high goal
+  chassis.set_turn_pid(-10.5, 113); //Turn towards high goal
   chassis.wait_drive();
 
   set_intake(0);
@@ -72,7 +72,7 @@ void inside_auton(){
   pros::delay(1000);
   set_intake(0);
 
-  chassis.set_turn_pid(-40, HIGHER_TURN_SPEED); //Turn towards high goal
+  chassis.set_turn_pid(-41, HIGHER_TURN_SPEED); //Turn towards high goal
   chassis.wait_drive();
   // set_intake(0);
   // chassis.set_drive_pid(7, 127);
@@ -104,8 +104,14 @@ void outside_auton() {
   pros::delay(750);
   set_intake(0);
 
-  chassis.set_turn_pid(-9, HIGHER_TURN_SPEED); //Turn towards other discs
+  chassis.set_turn_pid(2, HIGHER_TURN_SPEED); //Turn towards other discs
   chassis.wait_drive();
+
+chassis.set_drive_pid(2, 123); //First disc in line with shooting 
+  chassis.wait_drive();
+
+  
+
   set_intake(0);
   //1ST SHOOTING SET
   direct_fire(124, 100, 220);
@@ -115,13 +121,16 @@ void outside_auton() {
   pros::delay(100);
   set_intake(127);
 
-  chassis.set_turn_pid(10, 110); //Disc on line
+  chassis.set_drive_pid(-2, 123); //First disc in line with shooting 
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(14, 110); //Disc on line
   chassis.wait_drive();
 
   chassis.set_drive_pid(15, 123); //First disc in line with shooting 
   chassis.wait_drive();
   pros::delay(400);
-  chassis.set_drive_pid(-11, 123); //First disc in line with shooting 
+  chassis.set_drive_pid(-10, 123); //First disc in line with shooting 
   chassis.wait_drive();
 
   chassis.set_turn_pid(-64, 110); //Turn towards other discs
@@ -131,7 +140,7 @@ void outside_auton() {
   chassis.wait_drive();
   pros::delay(100);
 
-  chassis.set_turn_pid(11, 110); //Turn To shoot.
+  chassis.set_turn_pid(17, 110); //Turn To shoot.
   chassis.wait_drive();
   set_intake(0);
 
@@ -145,10 +154,13 @@ void outside_auton() {
   chassis.set_turn_pid(-64, HIGHER_TURN_SPEED); //Turn backwards
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-66, 127); //Move back towards rollers
+  chassis.set_drive_pid(-67, 127); //Move back towards rollers
   chassis.wait_drive();
 
-  chassis.set_swing_pid(ez::RIGHT_SWING, -17, 120); //Turn towards the high goal
+  chassis.set_swing_pid(ez::RIGHT_SWING, -15, 120); //Turn towards the high goal
+  chassis.wait_drive();
+  pros::delay(100);
+  chassis.set_drive_pid(3, 127); //Move back towards rollers
   chassis.wait_drive();
   // set_intake(40);
   // chassis.set_drive_pid(-3, 123); //Pick them up

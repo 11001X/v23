@@ -26,7 +26,7 @@ Intake Motor: PORT:17, Gear ratio:blue, Reversed: true
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 Drive chassis({-8, -2, 7}, {5, 4, -6}, 13, 3.25, 360, 1);
 
-pros::Motor flywheelmotor(17, pros::E_MOTOR_GEARSET_06, true);
+pros::Motor flywheelmotor(18, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor intakemotor(10, pros::E_MOTOR_GEARSET_06, true);
 
 //Piston ports
