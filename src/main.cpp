@@ -56,8 +56,9 @@ void initialize() //Runs when the program starts
   
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-      Auton("\nOutside Auton\n\n\n\n", outside_auton),
       Auton("Inside Auton\n", inside_auton),
+      Auton("\nOutside Auton\n\n\n\n", outside_auton),
+      
       Auton("\n\nSolo Win Point\n\n\n", solowinpoint),
       Auton("\n\n\nSkills\n\n", skills_auton),
       
@@ -94,6 +95,7 @@ void autonomous()
 
 void opcontrol()
 {
+  int FLYWHEEL_SPEED = 120; //Flywheel speed to initialize to
   // Chassis Coasting Brake Mode
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
 
@@ -103,8 +105,8 @@ void opcontrol()
   angler.set_value(true);
   bool ANGLER_UP = true;
 
-  // set_flywheel(113); //Start the flywheel to 113/127.
-  set_flywheel(127);
+  set_flywheel(FLYWHEEL_SPEED); 
+  
   bool FLYWHEEL_RUNNING = true;
 
   while (true) //Start of actual driver control loop.
@@ -116,7 +118,7 @@ void opcontrol()
     intake_control(127, -127);
 
     //Flywheel movement and speed definition.
-    FLYWHEEL_RUNNING = flywheelcontrol(127, FLYWHEEL_RUNNING);
+    FLYWHEEL_RUNNING = flywheelcontrol(FLYWHEEL_SPEED, FLYWHEEL_RUNNING);
     
     // To launch string
     launcher_control();

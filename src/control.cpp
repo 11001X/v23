@@ -27,6 +27,10 @@ bool flywheelcontrol(int val, bool running){
             return true;
         }
     }
+    if (controller.get_digital(DIGITAL_DOWN)){
+        set_flywheel(-val);
+        return false;
+    }
     return running;
 }
 

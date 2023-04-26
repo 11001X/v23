@@ -32,7 +32,7 @@ void inside_auton(){
   // chassis.set_drive_pid(-4, HIGHER_SPEED);
   // chassis.wait_drive();
 
-  chassis.set_turn_pid(-10.5, 113); //Turn towards high goal
+  chassis.set_turn_pid(-11.5, 113); //Turn towards high goal
   chassis.wait_drive();
 
   set_intake(0);
@@ -42,11 +42,11 @@ void inside_auton(){
   //Shooting Code for Set 1
   direct_fire(127, 500, 200);
   direct_fire(127, 1000, 200);
-  direct_fire(127, 1000, 400);
+  direct_fire(127, 1000, 200);
   pros::delay(200);
   set_intake(0);
   
-  set_flywheel(115); //SECOND set of shots flywheel;
+  set_flywheel(120); //SECOND set of shots flywheel;
 
   chassis.set_swing_pid(ez::RIGHT_SWING, 51, 113);
   chassis.wait_drive();
@@ -72,12 +72,12 @@ void inside_auton(){
   pros::delay(1000);
   set_intake(0);
 
-  chassis.set_turn_pid(-41, HIGHER_TURN_SPEED); //Turn towards high goal
+  chassis.set_turn_pid(-42, HIGHER_TURN_SPEED); //Turn towards high goal
   chassis.wait_drive();
   // set_intake(0);
   // chassis.set_drive_pid(7, 127);
   // // chassis.wait_until(1);
-  direct_fire(115, 500, 230);
+  direct_fire(120, 500, 230);
   // // chassis.wait_until(3);
   direct_fire(127, 700, 200);
   // // chassis.wait_until(5);
@@ -88,7 +88,7 @@ void inside_auton(){
 //OST - This is our far-side autonomous, made to maximize discs made and get a roller.
 void outside_auton() {
   set_intake(127);
-  set_flywheel(124);
+  set_flywheel(127);
 
   chassis.set_drive_pid(13.5, 50); //First disc in line with shooting 
   chassis.wait_until(3.5);
@@ -104,24 +104,24 @@ void outside_auton() {
   pros::delay(750);
   set_intake(0);
 
-  chassis.set_turn_pid(2, HIGHER_TURN_SPEED); //Turn towards other discs
-  chassis.wait_drive();
+  // chassis.set_turn_pid(0, HIGHER_TURN_SPEED); //Turn towards other discs
+  // chassis.wait_drive();
 
-chassis.set_drive_pid(2, 123); //First disc in line with shooting 
+chassis.set_drive_pid(10, 123); //First disc in line with shooting 
   chassis.wait_drive();
 
   
 
   set_intake(0);
   //1ST SHOOTING SET
-  direct_fire(124, 100, 220);
+  direct_fire(127, 100, 220);
   direct_fire(127, 800, 220);
-  direct_fire(127, 800, 300);
+  direct_fire(127, 800, 400);
   // set_flywheel(127);
   pros::delay(100);
   set_intake(127);
 
-  chassis.set_drive_pid(-2, 123); //First disc in line with shooting 
+  chassis.set_drive_pid(-10, 123); //First disc in line with shooting 
   chassis.wait_drive();
 
   chassis.set_turn_pid(14, 110); //Disc on line
@@ -145,19 +145,19 @@ chassis.set_drive_pid(2, 123); //First disc in line with shooting
   set_intake(0);
 
   // //2ND SHOOTING SET
-  direct_fire(127, 500, 200);
-  direct_fire(127, 800, 200);
-  direct_fire(127, 800, 300);
+  direct_fire(127, 600, 250);
+  direct_fire(127, 900, 250);
+  direct_fire(127, 900, 350);
   set_flywheel(127);
   set_intake(127);
 
   chassis.set_turn_pid(-64, HIGHER_TURN_SPEED); //Turn backwards
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-67, 127); //Move back towards rollers
+  chassis.set_drive_pid(-66, 127); //Move back towards rollers
   chassis.wait_drive();
 
-  chassis.set_swing_pid(ez::RIGHT_SWING, -15, 120); //Turn towards the high goal
+  chassis.set_swing_pid(ez::RIGHT_SWING, -13, 120); //Turn towards the high goal
   chassis.wait_drive();
   pros::delay(100);
   chassis.set_drive_pid(3, 127); //Move back towards rollers
